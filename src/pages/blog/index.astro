@@ -5,7 +5,7 @@ import Footer from "../../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
-import { queryPostMeta } from "./../../api/notion_proxy.ts";
+import { queryPostMeta, queryPostContent } from "./../../api/notion_proxy.ts";
 
 const posts = (await getCollection("blog")).sort(
   (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
@@ -16,6 +16,11 @@ console.log("----");
 console.log(postsList);
 console.log("====");
 console.log(JSON.stringify(postsList));
+
+const pageData = await queryPostContent(postsList[0].id);
+console.log("***");
+console.log(pageData);
+console.log("+++");
 ---
 
 <!doctype html>
