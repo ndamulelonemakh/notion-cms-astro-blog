@@ -4,9 +4,8 @@ import type {
   PageObjectResponse,
   QueryDatabaseParameters,
   ListBlockChildrenResponse,
-  BlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
-import { convertBlocksToMarkdown } from "./notion_content";
+import { convertBlocksToTextContent } from "./notion_content";
 
 const NOTION_API_KEY = import.meta.env.NOTION_CMS_SECRET;
 const NOTION_DATABASE_ID = import.meta.env.NOTION_CMS_DATABASE_ID;
@@ -117,5 +116,5 @@ export const queryPostContent = async (id: string) => {
   //     });
 
   //     return postContent;
-  return convertBlocksToMarkdown(page);
+  return convertBlocksToTextContent(page);
 };
