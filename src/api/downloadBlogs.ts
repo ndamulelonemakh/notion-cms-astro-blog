@@ -4,7 +4,6 @@
 import fs from "fs";
 import path from "path";
 import { getCompletedPosts } from "./notion_proxy";
-import { r } from "../../dist/chunks/astro_IjcWXtK1.mjs";
 
 const BLOGS_DIR = path.join(process.cwd(), "src", "content", "blog");
 const lastFetchedDate = process.argv[2] || "0000-00-00";
@@ -15,24 +14,23 @@ const fetchBlogs = async () => {
   return blogs;
 };
 
-
 const buildFrontMatter = (blog: Post) => {
   const frontMatter = [
     "---",
     `title: "${blog.title}"`,
-    `pubDate: "${blog.dateCreated}"`,  // todo: custom date format: 2023-11-13T07:17:00.000Z
+    `pubDate: "${blog.dateCreated}"`, // todo: custom date format: 2023-11-13T07:17:00.000Z
     `slug: "${blog.slug}"`,
     `description: "${blog.markdown?.slice(0, 200)}"`, // todo: do this when creating the blog
-    `tags: ${blog.tags.map(t => t.name)}`,
+    `tags: ${blog.tags.map((t) => t.name)}`,
     `---`,
-  ]
+  ];
   return frontMatter.join("\n");
-}
+};
 
 const saveBlogs = async (blogs: Post[]) => {
   const totalBlogs = blogs.length;
   let counter = 0;
-  const skippedBlogs = [];
+  const skippedBlogs: Post[] = [];
   console.info(`Saving ${totalBlogs} blogs to ${BLOGS_DIR}...`);
 
   for (const blog of blogs) {
@@ -54,7 +52,7 @@ const saveBlogs = async (blogs: Post[]) => {
 };
 
 export const runSync = async () => {
-  console.time("Starting to sync blogs...");
+  console.time("Sync blogs time");
   console.info(
     `Received params: ${JSON.stringify(
       {
@@ -72,8 +70,12 @@ export const runSync = async () => {
     return;
   }
 
-
   const blogs = await fetchBlogs();
   await saveBlogs(blogs);
-  console.timeEnd("All steps completed, Exiting.");
+  console.timeEnd("Sync blogs time");
 };
+
+// also run the script if this file is executed directly
+(async () => {
+  await runSync();
+})();

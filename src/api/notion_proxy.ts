@@ -7,15 +7,20 @@ import type {
 } from "@notionhq/client/build/src/api-endpoints";
 import { convertBlocksToTextContent } from "./notion_content";
 
-const NOTION_API_KEY = import.meta.env.NOTION_CMS_SECRET;
-const NOTION_DATABASE_ID = import.meta.env.NOTION_CMS_DATABASE_ID;
+const NOTION_API_KEY: any = import.meta.env?.NOTION_CMS_SECRET || process.env.NOTION_CMS_SECRET;
+const NOTION_DATABASE_ID: any = import.meta.env?.NOTION_CMS_DATABASE_ID || process.env.NOTION_CMS_DATABASE_ID;
+if (!NOTION_API_KEY) {
+  throw new Error("NOTION_API_KEY is not defined!");
+}
+if (!NOTION_DATABASE_ID) {
+  throw new Error("NOTION_DATABASE_ID is not defined!");
+}
 
 const notionClient = new Client({ auth: NOTION_API_KEY });
 const getSlugFromURL = (url: string): string => {
   const urlParts = url.split("/");
   return urlParts[urlParts.length - 1].slice(0, 200);
-}
-
+};
 
 export function convertStringToDate(dateString: string): Date {
   return new Date(dateString);
@@ -49,7 +54,7 @@ export const ParsePostMeta = (pageMeta: PageObjectResponse): PostMeta => {
 
 export const queryPostMeta = async (statusValue: PostStatus = "Done"): Promise<PostMeta[]> => {
   const database = await queryDatabase({
-    database_id: NOTION_DATABASE_ID,
+    database_id: NOTION_DATABASE_ID, // Note: if API key is not set, this will return HTTP_404
     filter: {
       property: "Status",
       status: {
