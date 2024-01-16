@@ -26,7 +26,6 @@ import type {
 // This is a helper module to stich together Notion blocks into content with various formats: Raw, Markdown, HTML, etc.
 // A very rudiementary implementation is provided here - good for now...
 
-type OutputFormat = "raw" | "markdown" | "html";
 enum BlockType {
   Heading1 = "heading_1",
   Heading2 = "heading_2",
@@ -56,11 +55,7 @@ type Styles = {
   // Add more styles as needed
 };
 
-function generateStyledElement(
-  tag: string,
-  content: string,
-  styles: Styles
-): string {
+function generateStyledElement(tag: string, content: string, styles: Styles): string {
   const styleString = Object.entries(styles)
     .map(([property, value]) => `${property}: ${value}`)
     .join("; ");
@@ -68,11 +63,7 @@ function generateStyledElement(
   return `<${tag} style="${styleString}">${content}</${tag}>`;
 }
 
-function generateStyledImageElement(
-  url: string,
-  styles: Styles,
-  caption?: string
-): string {
+function generateStyledImageElement(url: string, styles: Styles, caption?: string): string {
   const styleString = Object.entries(styles)
     .map(([property, value]) => `${property}: ${value}`)
     .join("; ");
@@ -84,39 +75,23 @@ function generateStyledImageElement(
 
 //#region ToDoBlockObjectResponse
 
-function extractParagraphText(
-  paragraph: ParagraphBlockObjectResponse,
-  format: OutputFormat = "raw"
-): string {
+function extractParagraphText(paragraph: ParagraphBlockObjectResponse, format: OutputFormat = "raw"): string {
   if (format === "markdown") {
-    return paragraph.paragraph.rich_text
-      .map((text) => text.plain_text)
-      .join(" ");
+    return paragraph.paragraph.rich_text.map((text) => text.plain_text).join(" ");
   } else if (format === "html") {
-    const sentences = paragraph.paragraph.rich_text.map(
-      (text) => text.plain_text
-    );
+    const sentences = paragraph.paragraph.rich_text.map((text) => text.plain_text);
     const color = paragraph.paragraph.rich_text[0].annotations.color;
     return generateStyledElement("p", sentences.join(" "), { color });
   } else {
-    return paragraph.paragraph.rich_text
-      .map((text) => text.plain_text)
-      .join(" ");
+    return paragraph.paragraph.rich_text.map((text) => text.plain_text).join(" ");
   }
 }
 
-function extractHeading1Text(
-  heading: Heading1BlockObjectResponse,
-  format: OutputFormat = "raw"
-): string {
+function extractHeading1Text(heading: Heading1BlockObjectResponse, format: OutputFormat = "raw"): string {
   if (format === "markdown") {
-    return heading.heading_1.rich_text
-      .map((text) => `# ${text.plain_text}`)
-      .join(" ");
+    return heading.heading_1.rich_text.map((text) => `# ${text.plain_text}`).join(" ");
   } else if (format === "html") {
-    const sentences = heading.heading_1.rich_text.map(
-      (text) => text.plain_text
-    );
+    const sentences = heading.heading_1.rich_text.map((text) => text.plain_text);
     const color = heading.heading_1.rich_text[0].annotations.color;
     return generateStyledElement("h1", sentences.join(" "), { color });
   } else {
@@ -124,23 +99,16 @@ function extractHeading1Text(
   }
 }
 
-function extractHeading2Text(
-  heading: Heading2BlockObjectResponse,
-  format: OutputFormat = "raw"
-): string {
+function extractHeading2Text(heading: Heading2BlockObjectResponse, format: OutputFormat = "raw"): string {
   if (!heading.heading_2 || !heading.heading_2.rich_text) {
     throw new Error("Invalid heading level 2 block response");
   }
 
   if (format === "markdown") {
     // Handle Markdown format
-    return heading.heading_2.rich_text
-      .map((text) => `## ${text.plain_text}`)
-      .join(" ");
+    return heading.heading_2.rich_text.map((text) => `## ${text.plain_text}`).join(" ");
   } else if (format === "html") {
-    const sentences = heading.heading_2.rich_text.map(
-      (text) => text.plain_text
-    );
+    const sentences = heading.heading_2.rich_text.map((text) => text.plain_text);
     const color = heading.heading_2.rich_text[0].annotations.color;
 
     return generateStyledElement("h2", sentences.join(" "), { color });
@@ -150,23 +118,16 @@ function extractHeading2Text(
   }
 }
 
-function extractHeading3Text(
-  heading: Heading3BlockObjectResponse,
-  format: OutputFormat = "raw"
-): string {
+function extractHeading3Text(heading: Heading3BlockObjectResponse, format: OutputFormat = "raw"): string {
   if (!heading.heading_3 || !heading.heading_3.rich_text) {
     throw new Error("Invalid heading level 3 block response");
   }
 
   if (format === "markdown") {
     // Handle Markdown format
-    return heading.heading_3.rich_text
-      .map((text) => `### ${text.plain_text}`)
-      .join(" ");
+    return heading.heading_3.rich_text.map((text) => `### ${text.plain_text}`).join(" ");
   } else if (format === "html") {
-    const sentences = heading.heading_3.rich_text.map(
-      (text) => text.plain_text
-    );
+    const sentences = heading.heading_3.rich_text.map((text) => text.plain_text);
     const color = heading.heading_3.rich_text[0].annotations.color;
 
     return generateStyledElement("h3", sentences.join(" "), { color });
@@ -186,21 +147,15 @@ function extractBulletedListItemText(
 
   if (format === "markdown") {
     // Handle Markdown format
-    return `- ${listItem.bulleted_list_item.rich_text
-      .map((text) => text.plain_text)
-      .join(" ")}`;
+    return `- ${listItem.bulleted_list_item.rich_text.map((text) => text.plain_text).join(" ")}`;
   } else if (format === "html") {
-    const sentences = listItem.bulleted_list_item.rich_text.map(
-      (text) => text.plain_text
-    );
+    const sentences = listItem.bulleted_list_item.rich_text.map((text) => text.plain_text);
     const color = listItem.bulleted_list_item.rich_text[0].annotations.color;
 
     return generateStyledElement("li", sentences.join(" "), { color });
   } else {
     // Handle other formats
-    return listItem.bulleted_list_item.rich_text
-      .map((text) => text.plain_text)
-      .join(" ");
+    return listItem.bulleted_list_item.rich_text.map((text) => text.plain_text).join(" ");
   }
 }
 
@@ -213,37 +168,26 @@ function extractNumberedListItemText(
   }
 
   if (format === "markdown") {
-    return `*. ${listItem.numbered_list_item.rich_text
-      .map((text) => text.plain_text)
-      .join(" ")}`;
+    return `*. ${listItem.numbered_list_item.rich_text.map((text) => text.plain_text).join(" ")}`;
   } else if (format === "html") {
-    const sentences = listItem.numbered_list_item.rich_text.map(
-      (text) => text.plain_text
-    );
+    const sentences = listItem.numbered_list_item.rich_text.map((text) => text.plain_text);
     const color = listItem.numbered_list_item.color;
 
     return generateStyledElement("li", sentences.join(" "), { color });
   } else {
     // Handle other formats
-    return listItem.numbered_list_item.rich_text
-      .map((text) => text.plain_text)
-      .join(" ");
+    return listItem.numbered_list_item.rich_text.map((text) => text.plain_text).join(" ");
   }
 }
 
-function extractQuoteText(
-  quote: QuoteBlockObjectResponse,
-  format: OutputFormat = "raw"
-): string {
+function extractQuoteText(quote: QuoteBlockObjectResponse, format: OutputFormat = "raw"): string {
   if (!quote.quote || !quote.quote.rich_text) {
     throw new Error("Invalid quote block response");
   }
 
   if (format === "markdown") {
     // Handle Markdown format
-    return `> ${quote.quote.rich_text
-      .map((text) => text.plain_text)
-      .join(" ")}`;
+    return `> ${quote.quote.rich_text.map((text) => text.plain_text).join(" ")}`;
   } else if (format === "html") {
     const sentences = quote.quote.rich_text.map((text) => text.plain_text);
     const color = quote.quote.color;
@@ -255,10 +199,7 @@ function extractQuoteText(
   }
 }
 
-function extractToDoText(
-  todoBlock: ToDoBlockObjectResponse,
-  format: OutputFormat = "raw"
-): string {
+function extractToDoText(todoBlock: ToDoBlockObjectResponse, format: OutputFormat = "raw"): string {
   if (!todoBlock.to_do || !todoBlock.to_do.rich_text) {
     throw new Error("Invalid to-do block response");
   }
@@ -266,9 +207,7 @@ function extractToDoText(
   if (format === "markdown") {
     // Handle Markdown format
     const checked = todoBlock.to_do.checked ? "[x]" : "[ ]";
-    return `${checked} ${todoBlock.to_do.rich_text
-      .map((text) => text.plain_text)
-      .join(" ")}`;
+    return `${checked} ${todoBlock.to_do.rich_text.map((text) => text.plain_text).join(" ")}`;
   } else if (format === "html") {
     const sentences = todoBlock.to_do.rich_text.map((text) => text.plain_text);
     const color = todoBlock.to_do.color;
@@ -280,66 +219,45 @@ function extractToDoText(
   }
 }
 
-function extractToggleText(
-  toggleBlock: ToggleBlockObjectResponse,
-  format: OutputFormat = "raw"
-): string {
+function extractToggleText(toggleBlock: ToggleBlockObjectResponse, format: OutputFormat = "raw"): string {
   if (!toggleBlock.toggle || !toggleBlock.toggle.rich_text) {
     throw new Error("Invalid toggle block response");
   }
 
   if (format === "markdown") {
     // Handle Markdown format
-    return `**${toggleBlock.toggle.rich_text
-      .map((text) => text.plain_text)
-      .join(" ")}**`;
+    return `**${toggleBlock.toggle.rich_text.map((text) => text.plain_text).join(" ")}**`;
   } else if (format === "html") {
-    const sentences = toggleBlock.toggle.rich_text.map(
-      (text) => text.plain_text
-    );
+    const sentences = toggleBlock.toggle.rich_text.map((text) => text.plain_text);
     const color = toggleBlock.toggle.rich_text[0].annotations.color;
 
     return generateStyledElement("div", sentences.join(" "), { color });
   } else {
     // Handle other formats
-    return toggleBlock.toggle.rich_text
-      .map((text) => text.plain_text)
-      .join(" ");
+    return toggleBlock.toggle.rich_text.map((text) => text.plain_text).join(" ");
   }
 }
 
-function extractTemplateText(
-  templateBlock: TemplateBlockObjectResponse,
-  format: OutputFormat = "raw"
-): string {
+function extractTemplateText(templateBlock: TemplateBlockObjectResponse, format: OutputFormat = "raw"): string {
   if (!templateBlock.template || !templateBlock.template.rich_text) {
     throw new Error("Invalid template block response");
   }
 
   if (format === "markdown") {
     // Handle Markdown format
-    return templateBlock.template.rich_text
-      .map((text) => text.plain_text)
-      .join(" ");
+    return templateBlock.template.rich_text.map((text) => text.plain_text).join(" ");
   } else if (format === "html") {
-    const sentences = templateBlock.template.rich_text.map(
-      (text) => text.plain_text
-    );
+    const sentences = templateBlock.template.rich_text.map((text) => text.plain_text);
     const color = templateBlock.template.rich_text[0].annotations.color;
 
     return generateStyledElement("div", sentences.join(" "), { color });
   } else {
     // Handle other formats
-    return templateBlock.template.rich_text
-      .map((text) => text.plain_text)
-      .join(" ");
+    return templateBlock.template.rich_text.map((text) => text.plain_text).join(" ");
   }
 }
 
-function extractEquationText(
-  equationBlock: EquationBlockObjectResponse,
-  format: OutputFormat = "raw"
-): string {
+function extractEquationText(equationBlock: EquationBlockObjectResponse, format: OutputFormat = "raw"): string {
   if (!equationBlock.equation || !equationBlock.equation.expression) {
     throw new Error("Invalid equation block response");
   }
@@ -357,10 +275,7 @@ function extractEquationText(
   }
 }
 
-function extractCodeText(
-  codeBlock: CodeBlockObjectResponse,
-  format: OutputFormat = "raw"
-): string {
+function extractCodeText(codeBlock: CodeBlockObjectResponse, format: OutputFormat = "raw"): string {
   if (!codeBlock.code || !codeBlock.code.rich_text) {
     throw new Error("Invalid code block response");
   }
@@ -374,114 +289,72 @@ function extractCodeText(
     const lines = codeBlock.code.rich_text.map((line) => line.plain_text);
     const caption = codeBlock.code.caption.map((text) => text.plain_text);
 
-    return `<pre><code>${lines.join("\n")}</code></pre><p>${caption.join(
-      " "
-    )}</p>`;
+    return `<pre><code>${lines.join("\n")}</code></pre><p>${caption.join(" ")}</p>`;
   } else {
     return codeBlock.code.rich_text.map((line) => line.plain_text).join("\n");
   }
 }
 
-function extractCalloutText(
-  calloutBlock: CalloutBlockObjectResponse,
-  format: OutputFormat = "raw"
-): string {
+function extractCalloutText(calloutBlock: CalloutBlockObjectResponse, format: OutputFormat = "raw"): string {
   if (!calloutBlock.callout || !calloutBlock.callout.rich_text) {
     throw new Error("Invalid callout block response");
   }
 
   if (format === "markdown") {
     // Handle Markdown format
-    return `> ${calloutBlock.callout.rich_text
-      .map((text) => text.plain_text)
-      .join(" ")}`;
+    return `> ${calloutBlock.callout.rich_text.map((text) => text.plain_text).join(" ")}`;
   } else if (format === "html") {
-    const sentences = calloutBlock.callout.rich_text.map(
-      (text) => text.plain_text
-    );
+    const sentences = calloutBlock.callout.rich_text.map((text) => text.plain_text);
     const color = calloutBlock.callout.color;
 
     return generateStyledElement("div", sentences.join(" "), { color });
   } else {
     // Handle other formats
-    return calloutBlock.callout.rich_text
-      .map((text) => text.plain_text)
-      .join(" ");
+    return calloutBlock.callout.rich_text.map((text) => text.plain_text).join(" ");
   }
 }
 
-function extractDividerText(
-  dividerBlock: DividerBlockObjectResponse,
-  _format: OutputFormat = "raw"
-): string {
+function extractDividerText(dividerBlock: DividerBlockObjectResponse, _format: OutputFormat = "raw"): string {
   // Divider block doesn't contain text, return an empty string
   return "";
 }
 
-function extractImageText(
-  imageBlock: ImageBlockObjectResponse,
-  format: OutputFormat = "raw"
-): string {
-  if (
-    !imageBlock.image ||
-    !imageBlock.image.type ||
-    !imageBlock.image.caption
-  ) {
+function extractImageText(imageBlock: ImageBlockObjectResponse, format: OutputFormat = "raw"): string {
+  if (!imageBlock.image || !imageBlock.image.type || !imageBlock.image.caption) {
     throw new Error("Invalid image block response");
   }
 
-  const url =
-    imageBlock.image.type === "external"
-      ? imageBlock.image.external.url
-      : imageBlock.image.file.url;
+  const url = imageBlock.image.type === "external" ? imageBlock.image.external.url : imageBlock.image.file.url;
 
   if (format === "markdown") {
-    return `![${imageBlock.image.caption
-      .map((text) => text.plain_text)
-      .join(" ")}](${url})`;
+    return `![${imageBlock.image.caption.map((text) => text.plain_text).join(" ")}](${url})`;
   } else if (format === "html") {
     const caption = imageBlock.image.caption.map((text) => text.plain_text);
 
     return generateStyledImageElement(url, {}, caption.join(" "));
   } else {
-    return (
-      url || imageBlock.image.caption.map((text) => text.plain_text).join(" ")
-    );
+    return url || imageBlock.image.caption.map((text) => text.plain_text).join(" ");
   }
 }
 
-function extractVideoText(
-  videoBlock: VideoBlockObjectResponse,
-  format: OutputFormat = "raw"
-): string {
+function extractVideoText(videoBlock: VideoBlockObjectResponse, format: OutputFormat = "raw"): string {
   if (!videoBlock.video || !videoBlock.video.caption) {
     throw new Error("Invalid video block response");
   }
 
-  const url =
-    videoBlock.video.type === "external"
-      ? videoBlock.video.external.url
-      : videoBlock.video.file.url;
+  const url = videoBlock.video.type === "external" ? videoBlock.video.external.url : videoBlock.video.file.url;
 
   if (format === "markdown") {
     // Handle Markdown format
-    return `![${videoBlock.video.caption
-      .map((text) => text.plain_text)
-      .join(" ")}](${url})`;
+    return `![${videoBlock.video.caption.map((text) => text.plain_text).join(" ")}](${url})`;
   } else if (format === "html") {
     const caption = videoBlock.video.caption.map((text) => text.plain_text);
     const color = videoBlock.video.caption[0].annotations.color;
 
-    return generateStyledElement(
-      "div",
-      `<video src="${url}" alt="${caption.join(" ")}" controls></video>`,
-      { color }
-    );
+    return generateStyledElement("div", `<video src="${url}" alt="${caption.join(" ")}" controls></video>`, { color });
   } else {
     // Handle other formats
-    return (
-      url ?? videoBlock.video.caption.map((text) => text.plain_text).join(" ")
-    );
+    return url ?? videoBlock.video.caption.map((text) => text.plain_text).join(" ");
   }
 }
 
@@ -611,13 +484,9 @@ function extractVideoText(
 
 //#region External API
 
-function convertBlocksToTextContent(
-  pageContent: ListBlockChildrenResponse,
-  format: OutputFormat = "raw"
-): string {
+function convertBlocksToTextContent(pageContent: ListBlockChildrenResponse, format: OutputFormat = "raw"): string {
   const parts: string[] = [];
-  const rawContent: BlockObjectResponse[] =
-    pageContent.results as BlockObjectResponse[];
+  const rawContent: BlockObjectResponse[] = pageContent.results as BlockObjectResponse[];
 
   for (const block of rawContent) {
     switch (block.type) {
@@ -634,19 +503,11 @@ function convertBlocksToTextContent(
         break;
 
       case BlockType.BulletedListItem:
-        parts.push(
-          extractBulletedListItemText(
-            block as BulletedListItemBlockObjectResponse
-          )
-        );
+        parts.push(extractBulletedListItemText(block as BulletedListItemBlockObjectResponse));
         break;
 
       case BlockType.NumberedListItem:
-        parts.push(
-          extractNumberedListItemText(
-            block as NumberedListItemBlockObjectResponse
-          )
-        );
+        parts.push(extractNumberedListItemText(block as NumberedListItemBlockObjectResponse));
         break;
 
       case BlockType.Paragraph:

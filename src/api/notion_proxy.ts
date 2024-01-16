@@ -11,31 +11,27 @@ const NOTION_API_KEY = import.meta.env.NOTION_CMS_SECRET;
 const NOTION_DATABASE_ID = import.meta.env.NOTION_CMS_DATABASE_ID;
 
 export const notionClient = new Client({ auth: NOTION_API_KEY });
-export type PostStatus = "Draft" | "In Progress" | "Published" | "Done";
-export type PostTag = {
-  name: string;
-  color: string;
-};
-export interface PostMeta {
-  id: string;
-  title: string;
-  dateCreated: string;
-  dateUpdated: string;
-  URL: string;
-  status: PostStatus;
-  published: boolean;
-  tags: PostTag[];
-  authors: string[];
-  imageURL?: string;
-}
 
-export interface Post extends PostMeta {
-  richText: string;
-  plainText: string;
-  markdown: string;
-  html: string;
-  contentType?: "text" | "markdown" | "html" | "rich-text" | "all";
-}
+// export interface PostMeta {
+//   id: string;
+//   title: string;
+//   dateCreated: string;
+//   dateUpdated: string;
+//   URL: string;
+//   status: PostStatus;
+//   published: boolean;
+//   tags: PostTag[];
+//   authors: string[];
+//   imageURL?: string;
+// }
+
+// export interface Post extends PostMeta {
+//   richText: string;
+//   plainText: string;
+//   markdown: string;
+//   html: string;
+//   contentType?: "text" | "markdown" | "html" | "rich-text" | "all";
+// }
 
 export function convertStringToDate(dateString: string): Date {
   return new Date(dateString);
@@ -99,7 +95,7 @@ export const queryPostMeta = async (
   return postMeta;
 };
 
-export const queryPostContent = async (id: string) => {
+export const queryPostContent = async (id: string, format: OutputFormat) => {
   const page: ListBlockChildrenResponse =
     await notionClient.blocks.children.list({
       block_id: id,
@@ -116,5 +112,5 @@ export const queryPostContent = async (id: string) => {
   //     });
 
   //     return postContent;
-  return convertBlocksToTextContent(page);
+  return convertBlocksToTextContent(page, format);
 };
