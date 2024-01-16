@@ -6,6 +6,7 @@ import type {
   ListBlockChildrenResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 import { convertBlocksToTextContent } from "./notion_content";
+import { UNSPLASH_RANDOM_IMAGE_URL } from "./../consts";
 
 const NOTION_API_KEY: any = import.meta.env?.NOTION_CMS_SECRET || process.env.NOTION_CMS_SECRET;
 const NOTION_DATABASE_ID: any = import.meta.env?.NOTION_CMS_DATABASE_ID || process.env.NOTION_CMS_DATABASE_ID;
@@ -33,6 +34,8 @@ export const ParsePostMeta = (pageMeta: PageObjectResponse): PostMeta => {
   const id = pageMeta.id;
   const properties = pageMeta.properties as any;
   const titles = properties["Name"]["title"].map((title: any) => title.plain_text);
+  const img = pageMeta.cover?.type == "external" ? pageMeta.cover.external.url : pageMeta.cover?.file.url;
+  const hasImage = img?.startsWith("https://") || false;
 
   return {
     id,
@@ -48,7 +51,7 @@ export const ParsePostMeta = (pageMeta: PageObjectResponse): PostMeta => {
       color: tag.color,
     })),
     authors: [pageMeta.created_by.id],
-    imageURL: pageMeta.cover?.type == "external" ? pageMeta.cover.external.url : pageMeta.cover?.file.url,
+    imageURL: hasImage ? img : UNSPLASH_RANDOM_IMAGE_URL,
   };
 };
 

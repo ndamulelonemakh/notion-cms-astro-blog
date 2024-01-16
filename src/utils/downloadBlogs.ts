@@ -22,6 +22,7 @@ const buildFrontMatter = (blog: Post) => {
     `slug: "${blog.slug}"`,
     `description: "${blog.markdown?.slice(0, 200)}"`, // todo: do this when creating the blog
     `tags: ${blog.tags.map((t) => t.name)}`,
+    `heroImage: "${blog.imageURL}"`,
     `---`,
   ];
   return frontMatter.join("\n");

@@ -34,6 +34,7 @@ const posts = (await getCollection("blog")).sort((a, b) => a.data.pubDate.valueO
       }
       ul li:first-child {
         width: 100%;
+        
         margin-bottom: 1rem;
         text-align: center;
       }
@@ -46,6 +47,7 @@ const posts = (await getCollection("blog")).sort((a, b) => a.data.pubDate.valueO
       ul li img {
         margin-bottom: 0.5rem;
         border-radius: 12px;
+    
       }
       ul li a {
         display: block;
@@ -92,7 +94,7 @@ const posts = (await getCollection("blog")).sort((a, b) => a.data.pubDate.valueO
             posts.map((post) => (
               <li>
                 <a href={`/blog/${post.slug}/`}>
-                  <img width={720} height={360} src={post.data.heroImage} alt="" />
+                  <img width={360} height={180} src={post.data.heroImage} alt="" />
                   <h4 class="title">{post.data.title}</h4>
                   <p class="date">
                     <FormattedDate date={post.data.pubDate} />
@@ -106,5 +108,4 @@ const posts = (await getCollection("blog")).sort((a, b) => a.data.pubDate.valueO
     </main>
     <Footer />
   </body>
-  ../../utils/downloadBlogs.ts
 </html>

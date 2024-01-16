@@ -34,8 +34,8 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "sync": "tsx --no-cache src/api/downloadBlogs.ts",
-    "syncDev": "tsx --no-cache --env-file .env src/api/downloadBlogs.ts"
+    "sync": "tsx --no-cache src/utils/downloadBlogs.ts",
+    "syncDev": "tsx --no-cache --env-file .env src/utils/downloadBlogs.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.4.1",
