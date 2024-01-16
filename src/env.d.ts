@@ -12,7 +12,7 @@ interface ImportMeta {
 }
 
 type PostStatus = "Draft" | "In Progress" | "Published" | "Done";
-type OutputFormat = "raw" | "markdown" | "html";
+type PostFormat = "raw" | "markdown" | "html";
 type PostTag = {
   name: string;
   color: string;
@@ -32,9 +32,9 @@ interface PostMeta {
 }
 
 interface Post extends PostMeta {
-  richText: string;
-  plainText: string;
-  markdown: string;
-  html: string;
-  contentType?: "text" | "markdown" | "html" | "rich-text" | "all";
+  richText?: string;
+  plainText?: string;
+  markdown?: string;
+  html?: string;
+  contentType: "text" | "markdown" | "html" | "rich-text" | "all";
 }

@@ -75,7 +75,7 @@ function generateStyledImageElement(url: string, styles: Styles, caption?: strin
 
 //#region ToDoBlockObjectResponse
 
-function extractParagraphText(paragraph: ParagraphBlockObjectResponse, format: OutputFormat = "raw"): string {
+function extractParagraphText(paragraph: ParagraphBlockObjectResponse, format: PostFormat = "raw"): string {
   if (format === "markdown") {
     return paragraph.paragraph.rich_text.map((text) => text.plain_text).join(" ");
   } else if (format === "html") {
@@ -87,7 +87,7 @@ function extractParagraphText(paragraph: ParagraphBlockObjectResponse, format: O
   }
 }
 
-function extractHeading1Text(heading: Heading1BlockObjectResponse, format: OutputFormat = "raw"): string {
+function extractHeading1Text(heading: Heading1BlockObjectResponse, format: PostFormat = "raw"): string {
   if (format === "markdown") {
     return heading.heading_1.rich_text.map((text) => `# ${text.plain_text}`).join(" ");
   } else if (format === "html") {
@@ -99,7 +99,7 @@ function extractHeading1Text(heading: Heading1BlockObjectResponse, format: Outpu
   }
 }
 
-function extractHeading2Text(heading: Heading2BlockObjectResponse, format: OutputFormat = "raw"): string {
+function extractHeading2Text(heading: Heading2BlockObjectResponse, format: PostFormat = "raw"): string {
   if (!heading.heading_2 || !heading.heading_2.rich_text) {
     throw new Error("Invalid heading level 2 block response");
   }
@@ -118,7 +118,7 @@ function extractHeading2Text(heading: Heading2BlockObjectResponse, format: Outpu
   }
 }
 
-function extractHeading3Text(heading: Heading3BlockObjectResponse, format: OutputFormat = "raw"): string {
+function extractHeading3Text(heading: Heading3BlockObjectResponse, format: PostFormat = "raw"): string {
   if (!heading.heading_3 || !heading.heading_3.rich_text) {
     throw new Error("Invalid heading level 3 block response");
   }
@@ -139,7 +139,7 @@ function extractHeading3Text(heading: Heading3BlockObjectResponse, format: Outpu
 
 function extractBulletedListItemText(
   listItem: BulletedListItemBlockObjectResponse,
-  format: OutputFormat = "raw"
+  format: PostFormat = "raw"
 ): string {
   if (!listItem.bulleted_list_item || !listItem.bulleted_list_item.rich_text) {
     throw new Error("Invalid bulleted list item block response");
@@ -161,7 +161,7 @@ function extractBulletedListItemText(
 
 function extractNumberedListItemText(
   listItem: NumberedListItemBlockObjectResponse,
-  format: OutputFormat = "raw"
+  format: PostFormat = "raw"
 ): string {
   if (!listItem.numbered_list_item || !listItem.numbered_list_item.rich_text) {
     throw new Error("Invalid numbered list item block response");
@@ -180,7 +180,7 @@ function extractNumberedListItemText(
   }
 }
 
-function extractQuoteText(quote: QuoteBlockObjectResponse, format: OutputFormat = "raw"): string {
+function extractQuoteText(quote: QuoteBlockObjectResponse, format: PostFormat = "raw"): string {
   if (!quote.quote || !quote.quote.rich_text) {
     throw new Error("Invalid quote block response");
   }
@@ -199,7 +199,7 @@ function extractQuoteText(quote: QuoteBlockObjectResponse, format: OutputFormat 
   }
 }
 
-function extractToDoText(todoBlock: ToDoBlockObjectResponse, format: OutputFormat = "raw"): string {
+function extractToDoText(todoBlock: ToDoBlockObjectResponse, format: PostFormat = "raw"): string {
   if (!todoBlock.to_do || !todoBlock.to_do.rich_text) {
     throw new Error("Invalid to-do block response");
   }
@@ -219,7 +219,7 @@ function extractToDoText(todoBlock: ToDoBlockObjectResponse, format: OutputForma
   }
 }
 
-function extractToggleText(toggleBlock: ToggleBlockObjectResponse, format: OutputFormat = "raw"): string {
+function extractToggleText(toggleBlock: ToggleBlockObjectResponse, format: PostFormat = "raw"): string {
   if (!toggleBlock.toggle || !toggleBlock.toggle.rich_text) {
     throw new Error("Invalid toggle block response");
   }
@@ -238,7 +238,7 @@ function extractToggleText(toggleBlock: ToggleBlockObjectResponse, format: Outpu
   }
 }
 
-function extractTemplateText(templateBlock: TemplateBlockObjectResponse, format: OutputFormat = "raw"): string {
+function extractTemplateText(templateBlock: TemplateBlockObjectResponse, format: PostFormat = "raw"): string {
   if (!templateBlock.template || !templateBlock.template.rich_text) {
     throw new Error("Invalid template block response");
   }
@@ -257,7 +257,7 @@ function extractTemplateText(templateBlock: TemplateBlockObjectResponse, format:
   }
 }
 
-function extractEquationText(equationBlock: EquationBlockObjectResponse, format: OutputFormat = "raw"): string {
+function extractEquationText(equationBlock: EquationBlockObjectResponse, format: PostFormat = "raw"): string {
   if (!equationBlock.equation || !equationBlock.equation.expression) {
     throw new Error("Invalid equation block response");
   }
@@ -275,7 +275,7 @@ function extractEquationText(equationBlock: EquationBlockObjectResponse, format:
   }
 }
 
-function extractCodeText(codeBlock: CodeBlockObjectResponse, format: OutputFormat = "raw"): string {
+function extractCodeText(codeBlock: CodeBlockObjectResponse, format: PostFormat = "raw"): string {
   if (!codeBlock.code || !codeBlock.code.rich_text) {
     throw new Error("Invalid code block response");
   }
@@ -295,7 +295,7 @@ function extractCodeText(codeBlock: CodeBlockObjectResponse, format: OutputForma
   }
 }
 
-function extractCalloutText(calloutBlock: CalloutBlockObjectResponse, format: OutputFormat = "raw"): string {
+function extractCalloutText(calloutBlock: CalloutBlockObjectResponse, format: PostFormat = "raw"): string {
   if (!calloutBlock.callout || !calloutBlock.callout.rich_text) {
     throw new Error("Invalid callout block response");
   }
@@ -314,12 +314,12 @@ function extractCalloutText(calloutBlock: CalloutBlockObjectResponse, format: Ou
   }
 }
 
-function extractDividerText(dividerBlock: DividerBlockObjectResponse, _format: OutputFormat = "raw"): string {
+function extractDividerText(dividerBlock: DividerBlockObjectResponse, _format: PostFormat = "raw"): string {
   // Divider block doesn't contain text, return an empty string
   return "";
 }
 
-function extractImageText(imageBlock: ImageBlockObjectResponse, format: OutputFormat = "raw"): string {
+function extractImageText(imageBlock: ImageBlockObjectResponse, format: PostFormat = "raw"): string {
   if (!imageBlock.image || !imageBlock.image.type || !imageBlock.image.caption) {
     throw new Error("Invalid image block response");
   }
@@ -337,7 +337,7 @@ function extractImageText(imageBlock: ImageBlockObjectResponse, format: OutputFo
   }
 }
 
-function extractVideoText(videoBlock: VideoBlockObjectResponse, format: OutputFormat = "raw"): string {
+function extractVideoText(videoBlock: VideoBlockObjectResponse, format: PostFormat = "raw"): string {
   if (!videoBlock.video || !videoBlock.video.caption) {
     throw new Error("Invalid video block response");
   }
@@ -484,7 +484,7 @@ function extractVideoText(videoBlock: VideoBlockObjectResponse, format: OutputFo
 
 //#region External API
 
-function convertBlocksToTextContent(pageContent: ListBlockChildrenResponse, format: OutputFormat = "raw"): string {
+function convertBlocksToTextContent(pageContent: ListBlockChildrenResponse, format: PostFormat = "raw"): string {
   const parts: string[] = [];
   const rawContent: BlockObjectResponse[] = pageContent.results as BlockObjectResponse[];
 

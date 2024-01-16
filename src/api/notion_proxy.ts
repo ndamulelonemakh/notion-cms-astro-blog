@@ -37,16 +37,13 @@ export function convertStringToDate(dateString: string): Date {
   return new Date(dateString);
 }
 
-export const queryDatabase = async (
-  params: QueryDatabaseParameters
-): Promise<QueryDatabaseResponse> => await notionClient.databases.query(params);
+export const queryDatabase = async (params: QueryDatabaseParameters): Promise<QueryDatabaseResponse> =>
+  await notionClient.databases.query(params);
 
 export const ParsePostMeta = (pageMeta: PageObjectResponse): PostMeta => {
   const id = pageMeta.id;
   const properties = pageMeta.properties as any;
-  const titles = properties["Name"]["title"].map(
-    (title: any) => title.plain_text
-  );
+  const titles = properties["Name"]["title"].map((title: any) => title.plain_text);
 
   return {
     id,
@@ -55,24 +52,17 @@ export const ParsePostMeta = (pageMeta: PageObjectResponse): PostMeta => {
     dateUpdated: pageMeta.last_edited_time,
     URL: pageMeta.url,
     status: properties["Status"]["status"].name,
-    published: properties["Published"]
-      ? properties["Published"]["checkbox"]
-      : false,
+    published: properties["Published"] ? properties["Published"]["checkbox"] : false,
     tags: properties["Tags"]["multi_select"].map((tag: any) => ({
       name: tag.name,
       color: tag.color,
     })),
     authors: [pageMeta.created_by.id],
-    imageURL:
-      pageMeta.cover?.type == "external"
-        ? pageMeta.cover.external.url
-        : pageMeta.cover?.file.url,
+    imageURL: pageMeta.cover?.type == "external" ? pageMeta.cover.external.url : pageMeta.cover?.file.url,
   };
 };
 
-export const queryPostMeta = async (
-  statusValue: PostStatus = "Done"
-): Promise<PostMeta[]> => {
+export const queryPostMeta = async (statusValue: PostStatus = "Done"): Promise<PostMeta[]> => {
   const database = await queryDatabase({
     database_id: NOTION_DATABASE_ID,
     filter: {
@@ -89,28 +79,44 @@ export const queryPostMeta = async (
     ],
   });
   const pages = database.results;
-  const postMeta = pages.map((page) =>
-    ParsePostMeta(page as PageObjectResponse)
-  );
+  const postMeta = pages.map((page) => ParsePostMeta(page as PageObjectResponse));
   return postMeta;
 };
 
-export const queryPostContent = async (id: string, format: OutputFormat) => {
-  const page: ListBlockChildrenResponse =
-    await notionClient.blocks.children.list({
-      block_id: id,
-    });
+export const queryPostContent = async (id: string, format: PostFormat): Promise<string> => {
+  const page: ListBlockChildrenResponse = await notionClient.blocks.children.list({
+    block_id: id,
+  });
 
-  //   const blocks = page.results;
-
-  //     const postContent = blocks.map((block) => {
-  //         const blockObject = block as any;
-  //         const blockType = blockObject.type;
-  //         const blockContent = blockObject.type;
-  //         const data = blockObject.paragraph ? blockObject.paragraph.text : null;
-  //         return blockContent;
-  //     });
-
-  //     return postContent;
   return convertBlocksToTextContent(page, format);
 };
+
+//#region Convenience functions
+export const getCompletedPosts = async (fmt: PostFormat = "markdown"): Promise<Post[]> => {
+  const postMeta = await queryPostMeta("Done");
+  const posts: Post[] = [];
+
+  for (const meta of postMeta) {
+    const content = await queryPostContent(meta.id, fmt);
+    posts.push({
+      ...meta,
+      contentType: "markdown",
+      markdown: content,
+    });
+  }
+
+  return posts;
+};
+
+export const getCompletedPost = async (id: string, fmt: PostFormat = "markdown"): Promise<Post> => {
+  const meta = await queryPostMeta("Done");
+  const content = await queryPostContent(id, fmt);
+
+  return {
+    ...meta[0],
+    contentType: "markdown",
+    markdown: content,
+  };
+};
+
+//#endregion

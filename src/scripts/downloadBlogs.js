@@ -5,15 +5,16 @@
 // const fs = require("fs");
 import fs from "fs";
 import path from "path";
-import { execSync } from "child_process";
+import { getCompletedPosts } from "../api/notion_proxy";
 
 const BLOGS_API_URL = "BLOGS_API_URL";
 const BLOGS_DIR = "../content/blog";
 const lastFetchedDate = process.argv[2] || "0000-00-00";
 
 const fetchBlogs = async () => {
-  console.info("TODO: Fetching blogs from Notion..");
-  return [];
+  console.info("Fetching blogs from Notion..");
+  const blogs = await getCompletedPosts(); //   TODO: would be wise to add limits and possibly pagination?
+  return blogs;
 };
 
 const saveBlogs = async (blogs) => {
@@ -40,7 +41,7 @@ const saveBlogs = async (blogs) => {
 };
 
 (async () => {
-  console.info("Starting to sync blogs...");
+  console.time("Starting to sync blogs...");
   console.info(
     `Received params: ${JSON.stringify(
       {
@@ -55,5 +56,5 @@ const saveBlogs = async (blogs) => {
 
   const blogs = await fetchBlogs();
   await saveBlogs(blogs);
-  console.info("All steps completed, Exiting.");
+  console.timeEnd("All steps completed, Exiting.");
 })();
