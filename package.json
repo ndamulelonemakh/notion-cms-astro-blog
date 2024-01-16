@@ -1,14 +1,41 @@
 {
   "name": "notion-cms-astro-blog",
+  "author": {
+    "name": "Ndamulelo Nemakhavhani",
+    "email": "endeesa@yahoo.com"
+  },
+  "description": "A rudimentary implementation of a CMS using Notion as the backend and Astro Content Collection API",
+  "keywords": [
+    "astro",
+    "astroJS",
+    "notion",
+    "cms",
+    "astro-content-collection",
+    "blog",
+    "template",
+    "starter"
+  ],
+  "homepage": "https://github.com/endeesa/notion-cms-astro-blog#readme",
+  "bugs": {
+    "url": "https://github.com/endeesa/notion-cms-astro-blog/issues",
+    "email": "endeesa@yahoo.com"
+  },
+  "license": "CC-BY-4.0",
   "type": "module",
   "version": "0.0.1",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/endeesa/notion-cms-astro-blog.git"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "sync": "node ./src/scripts/downloadBlogs.js"
+    "sync": "tsx --no-cache src/api/downloadBlogs.ts",
+    "syncDev": "tsx --no-cache --env-file .env src/api/downloadBlogs.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.4.1",
@@ -20,5 +47,12 @@
     "astro": "^4.1.2",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
-  }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ]
 }

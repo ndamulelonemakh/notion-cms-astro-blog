@@ -1,0 +1,100 @@
+---
+title: "Understanding AWS IAM using a football analogy - Manchester City"
+pubDate: "2023-11-13T07:17:00.000Z"
+slug: "Understanding-AWS-IAM-using-a-football-analogy-Manchester-City-586f6047a8d64cef8fd62b9e993b36fa"
+description: "When it comes to understanding  AWS Identity and Access Management  (IAM), it can be as complex as a tactical football match. To simplify this, let's use Manchester City, one of the premier football c"
+tags: cloud,aws,system design,cyber security,identity and access management
+---
+
+
+
+When it comes to understanding  AWS Identity and Access Management  (IAM), it can be as complex as a tactical football match. To simplify this, let's use Manchester City, one of the premier football clubs, as an analogy to explain IAM concepts.
+
+## 1. Team Manager: The Root User
+
+Pep Guardiola, the manager of Manchester City, is akin to the  AWS root user . He has overarching control and makes critical decisions, just as the root user has full access to all AWS services and resources.
+
+## 2. Coaches and Staff: IAM Users
+
+Each member of Guardiola's staff, like coaches, physiotherapists, or scouts, represents  IAM users in AWS . They have specific roles, responsibilities, and permissions within the team, similar to how IAM users have distinct access rights in AWS.
+
+## 3. Player Positions: IAM Roles
+
+Consider the players on the field: Ederson as goalkeeper, Ruben Dias as defender, Kevin De Bruyne as midfielder, and Phil Foden as forward. Each player's position is like an  IAM role , with specific responsibilities and rules. For instance, Ederson, the goalkeeper, has a unique role and rules, such as not handling the ball outside the 18-yard box, similar to how an IAM role has specific permissions and restrictions in AWS.
+
+## 4. Training Drills: Policies
+
+Just as Guardiola designs specific drills for skill development, in  AWS, policies  are JSON documents that define permissions for users, roles, and groups. These policies ensure that each team member knows their role and follows the game plan effectively.
+
+## 5. Team Strategy: Groups
+
+Players in Manchester City are organized into units (defense, midfield, attack), similar to how  AWS IAM groups  manage a collection of users. This organization makes managing permissions more efficient, just like a well-structured team formation.
+
+## 6. Match Day Rules: Permissions
+
+In football, rules govern what players can do on the pitch. Similarly, in  AWS IAM, permissions  specify the actions that users and roles can or cannot perform. They ensure that every action taken is within the boundaries of what is allowed, maintaining order and security.
+
+## 7. Transfer Window: Identity Federation
+
+The transfer window in football, where players are loaned or transferred, resembles the  identity federation in AWS IAM . It allows external identities, like players from other clubs, to be integrated and given access to the team's resources.
+
+<hr />
+
+# TL;DR
+
+In AWS, Identity and Access Management (IAM) is crucial for secure and efficient access management to AWS resources. Here is a breakdown of the core concepts:
+
+
+
+- Root User:  The primary account holder with full access to all AWS services and resources, akin to a football team's manager overseeing overall operations.
+
+- Subjects (IAM Users, Groups, Service Accounts/Applications):
+
+- IAM Roles:  Collections of permissions defining allowed actions within AWS, akin to the specific positions and responsibilities of players (like goalkeeper, defender) on a football team.
+
+- IAM Policies:  Documents outlining permissions and conditions, similar to the training drills and rules that guide players' actions and strategies in football. The policy document typically includes the following sections:
+
+
+
+For example:  This example represents a simple policy that allows a subject to list the contents of a specific S3 bucket called  example_bucket .
+
+
+
+```javascript
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "s3:ListBucket",
+            "Resource": "arn:aws:s3:::example_bucket"
+        }
+    ]
+}
+```
+
+
+
+- Permissions:  Define what actions subjects can or cannot perform, much like the rules of a football game that determine what each player is allowed to do on the field. e.g. The effect for an Offside action is always ‘Deny’
+
+
+
+# Closing remarks
+
+When implementing AWS IAM in your organization, it's crucial to not only grasp the roles and responsibilities within the system but also to adhere to best practices for optimal security and efficiency. Emphasizing the  principle of least privilege  ensures that entities have only the permissions necessary for their tasks, akin to players in football having roles tailored to their skills. 
+
+Regular audits of IAM roles  and policies are like routine team performance reviews, crucial for maintaining security and effectiveness.  Just-in-Time  (JIT) access provisioning, akin to strategic player substitutions in crucial moments of a match, enhances security by granting necessary permissions only when needed. These practices ensure that your AWS environment, much like a well-coached football team, operates at peak efficiency with robust security measures in place.
+
+# Additional learning resources
+
+You can learn more about AWS identities and access management here:
+
+
+
+- AWS Identity and Access Management  official documentation
+
+- AWS Policy samples on Github
+
+
+
+Note that we can apply similar concepts to other cloud providers such as Azure and GCP. For example, in Azure, we can think of the different roles within  Azure Active Directory and Resource Management  as members positions in a sports team, each with their specific duties and limitations. Similarly,  GCP's Cloud Identity and Access Management (IAM)  can be likened to a coach's playbook, outlining the strategies and moves (or permissions) for each team member, ensuring everyone plays their part effectively and securely.
