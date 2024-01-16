@@ -633,7 +633,6 @@ function convertBlocksToTextContent(
         parts.push(extractHeading3Text(block as Heading3BlockObjectResponse));
         break;
 
-
       case BlockType.BulletedListItem:
         parts.push(
           extractBulletedListItemText(
@@ -641,7 +640,6 @@ function convertBlocksToTextContent(
           )
         );
         break;
-
 
       case BlockType.NumberedListItem:
         parts.push(
@@ -652,14 +650,60 @@ function convertBlocksToTextContent(
         break;
 
       case BlockType.Paragraph:
-        parts.push(
-          extractParagraphText(block as ParagraphBlockObjectResponse)
-        );
+        parts.push(extractParagraphText(block as ParagraphBlockObjectResponse));
         break;
 
       case BlockType.Quote:
         parts.push(extractQuoteText(block as QuoteBlockObjectResponse));
         break;
+
+      case BlockType.ToDo:
+        parts.push(extractToDoText(block as ToDoBlockObjectResponse));
+        break;
+
+      case BlockType.Toggle:
+        parts.push(extractToggleText(block as ToggleBlockObjectResponse));
+        break;
+
+      case BlockType.Template:
+        parts.push(extractTemplateText(block as TemplateBlockObjectResponse));
+        break;
+
+      case BlockType.Equation:
+        parts.push(extractEquationText(block as EquationBlockObjectResponse));
+        break;
+
+      case BlockType.Code:
+        parts.push(extractCodeText(block as CodeBlockObjectResponse));
+        break;
+
+      case BlockType.Callout:
+        parts.push(extractCalloutText(block as CalloutBlockObjectResponse));
+        break;
+
+      case BlockType.Divider:
+        parts.push(extractDividerText(block as DividerBlockObjectResponse));
+        break;
+
+      case BlockType.Image:
+        parts.push(extractImageText(block as ImageBlockObjectResponse));
+        break;
+
+      case BlockType.Video:
+        parts.push(extractVideoText(block as VideoBlockObjectResponse));
+        break;
+
+      // case BlockType.Pdf:
+      //   parts.push(extractPdfText(block as PdfBlockObjectResponse));
+      //   break;
+
+      // case BlockType.File:
+      //   parts.push(extractFileText(block as FileBlockObjectResponse));
+      //   break;
+
+      // case BlockType.Audio:
+      //   parts.push(extractAudioText(block as AudioBlockObjectResponse));
+      //   break;
 
       default:
         parts.push(`Unsupported block type: ${block.type}`);
