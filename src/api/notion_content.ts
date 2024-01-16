@@ -316,7 +316,7 @@ function extractCalloutText(calloutBlock: CalloutBlockObjectResponse, format: Po
 
 function extractDividerText(dividerBlock: DividerBlockObjectResponse, _format: PostFormat = "raw"): string {
   // Divider block doesn't contain text, return an empty string
-  return "";
+  return "<hr />";
 }
 
 function extractImageText(imageBlock: ImageBlockObjectResponse, format: PostFormat = "raw"): string {
@@ -572,9 +572,8 @@ function convertBlocksToTextContent(pageContent: ListBlockChildrenResponse, form
     }
   }
 
-  return parts.join("\n");
+  return parts.join("\n\n");
 }
-
 //#endregion
 
 export { convertBlocksToTextContent };
