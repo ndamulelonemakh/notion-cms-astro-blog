@@ -491,67 +491,67 @@ function convertBlocksToTextContent(pageContent: ListBlockChildrenResponse, form
   for (const block of rawContent) {
     switch (block.type) {
       case BlockType.Heading1:
-        parts.push(extractHeading1Text(block as Heading1BlockObjectResponse));
+        parts.push(extractHeading1Text(block as Heading1BlockObjectResponse, format));
         break;
 
       case BlockType.Heading2:
-        parts.push(extractHeading2Text(block as Heading2BlockObjectResponse));
+        parts.push(extractHeading2Text(block as Heading2BlockObjectResponse, format));
         break;
 
       case BlockType.Heading3:
-        parts.push(extractHeading3Text(block as Heading3BlockObjectResponse));
+        parts.push(extractHeading3Text(block as Heading3BlockObjectResponse, format));
         break;
 
       case BlockType.BulletedListItem:
-        parts.push(extractBulletedListItemText(block as BulletedListItemBlockObjectResponse));
+        parts.push(extractBulletedListItemText(block as BulletedListItemBlockObjectResponse, format));
         break;
 
       case BlockType.NumberedListItem:
-        parts.push(extractNumberedListItemText(block as NumberedListItemBlockObjectResponse));
+        parts.push(extractNumberedListItemText(block as NumberedListItemBlockObjectResponse, format));
         break;
 
       case BlockType.Paragraph:
-        parts.push(extractParagraphText(block as ParagraphBlockObjectResponse));
+        parts.push(extractParagraphText(block as ParagraphBlockObjectResponse, format));
         break;
 
       case BlockType.Quote:
-        parts.push(extractQuoteText(block as QuoteBlockObjectResponse));
+        parts.push(extractQuoteText(block as QuoteBlockObjectResponse, format));
         break;
 
       case BlockType.ToDo:
-        parts.push(extractToDoText(block as ToDoBlockObjectResponse));
+        parts.push(extractToDoText(block as ToDoBlockObjectResponse, format));
         break;
 
       case BlockType.Toggle:
-        parts.push(extractToggleText(block as ToggleBlockObjectResponse));
+        parts.push(extractToggleText(block as ToggleBlockObjectResponse, format));
         break;
 
       case BlockType.Template:
-        parts.push(extractTemplateText(block as TemplateBlockObjectResponse));
+        parts.push(extractTemplateText(block as TemplateBlockObjectResponse, format));
         break;
 
       case BlockType.Equation:
-        parts.push(extractEquationText(block as EquationBlockObjectResponse));
+        parts.push(extractEquationText(block as EquationBlockObjectResponse, format));
         break;
 
       case BlockType.Code:
-        parts.push(extractCodeText(block as CodeBlockObjectResponse));
+        parts.push(extractCodeText(block as CodeBlockObjectResponse, format));
         break;
 
       case BlockType.Callout:
-        parts.push(extractCalloutText(block as CalloutBlockObjectResponse));
+        parts.push(extractCalloutText(block as CalloutBlockObjectResponse, format));
         break;
 
       case BlockType.Divider:
-        parts.push(extractDividerText(block as DividerBlockObjectResponse));
+        parts.push(extractDividerText(block as DividerBlockObjectResponse, format));
         break;
 
       case BlockType.Image:
-        parts.push(extractImageText(block as ImageBlockObjectResponse));
+        parts.push(extractImageText(block as ImageBlockObjectResponse, format));
         break;
 
       case BlockType.Video:
-        parts.push(extractVideoText(block as VideoBlockObjectResponse));
+        parts.push(extractVideoText(block as VideoBlockObjectResponse, format));
         break;
 
       // case BlockType.Pdf:

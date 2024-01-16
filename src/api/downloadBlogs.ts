@@ -3,10 +3,10 @@
 // usage: node downloadBlogs.js <last-fetched-date>
 import fs from "fs";
 import path from "path";
-import { getCompletedPosts } from "../api/notion_proxy";
+import { getCompletedPosts } from "./notion_proxy";
+import { r } from "../../dist/chunks/astro_IjcWXtK1.mjs";
 
-const BLOGS_API_URL = "BLOGS_API_URL";
-const BLOGS_DIR = "../content/blog";
+const BLOGS_DIR = path.join(process.cwd(), "src", "content", "blog");
 const lastFetchedDate = process.argv[2] || "0000-00-00";
 
 const fetchBlogs = async () => {
@@ -15,7 +15,21 @@ const fetchBlogs = async () => {
   return blogs;
 };
 
-const saveBlogs = async (blogs) => {
+
+const buildFrontMatter = (blog: Post) => {
+  const frontMatter = [
+    "---",
+    `title: "${blog.title}"`,
+    `pubDate: "${blog.dateCreated}"`,  // todo: custom date format: 2023-11-13T07:17:00.000Z
+    `slug: "${blog.slug}"`,
+    `description: "${blog.markdown?.slice(0, 200)}"`, // todo: do this when creating the blog
+    `tags: ${blog.tags.map(t => t.name)}`,
+    `---`,
+  ]
+  return frontMatter.join("\n");
+}
+
+const saveBlogs = async (blogs: Post[]) => {
   const totalBlogs = blogs.length;
   let counter = 0;
   const skippedBlogs = [];
@@ -23,11 +37,12 @@ const saveBlogs = async (blogs) => {
 
   for (const blog of blogs) {
     counter++;
-    const filePath = path.join(BLOGS_DIR, `${blog.slug}.md`);
+    const filePath = path.join(BLOGS_DIR, `${blog.slug}.mdx`);
     console.info(`Saving blog ${counter} of ${totalBlogs} with FilePath: ${filePath}...`);
 
-    const content = `---# ${blog.title}\n\n${blog.content}`;
-    fs.writeFileSync(filePath, content);
+    const frontMatter = buildFrontMatter(blog);
+    const content = `${frontMatter}\n\n\n\n${blog.markdown}`;
+    fs.writeFileSync(filePath, content, { flag: "w" });
     const bytes = fs.statSync(filePath).size;
     if (bytes === 0) {
       console.error(`Error: Blog ${blog.slug} is empty!`);
@@ -38,13 +53,11 @@ const saveBlogs = async (blogs) => {
   console.info(`Done saving ${counter} items! Skipped ${skippedBlogs.length} blogs.`);
 };
 
-
 export const runSync = async () => {
   console.time("Starting to sync blogs...");
   console.info(
     `Received params: ${JSON.stringify(
       {
-        BLOGS_API_URL,
         BLOGS_DIR,
         lastFetchedDate,
       },
@@ -53,7 +66,14 @@ export const runSync = async () => {
     )}`
   );
 
+  // fail if blogs dir does not exist
+  if (!fs.existsSync(BLOGS_DIR)) {
+    console.error(`Error: Directory ${BLOGS_DIR} does not exist!`);
+    return;
+  }
+
+
   const blogs = await fetchBlogs();
   await saveBlogs(blogs);
   console.timeEnd("All steps completed, Exiting.");
-}
+};

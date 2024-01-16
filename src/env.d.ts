@@ -24,6 +24,7 @@ interface PostMeta {
   dateCreated: string;
   dateUpdated: string;
   URL: string;
+  slug: string;
   status: PostStatus;
   published: boolean;
   tags: PostTag[];

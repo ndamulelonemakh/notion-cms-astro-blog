@@ -10,28 +10,12 @@ import { convertBlocksToTextContent } from "./notion_content";
 const NOTION_API_KEY = import.meta.env.NOTION_CMS_SECRET;
 const NOTION_DATABASE_ID = import.meta.env.NOTION_CMS_DATABASE_ID;
 
-export const notionClient = new Client({ auth: NOTION_API_KEY });
+const notionClient = new Client({ auth: NOTION_API_KEY });
+const getSlugFromURL = (url: string): string => {
+  const urlParts = url.split("/");
+  return urlParts[urlParts.length - 1].slice(0, 200);
+}
 
-// export interface PostMeta {
-//   id: string;
-//   title: string;
-//   dateCreated: string;
-//   dateUpdated: string;
-//   URL: string;
-//   status: PostStatus;
-//   published: boolean;
-//   tags: PostTag[];
-//   authors: string[];
-//   imageURL?: string;
-// }
-
-// export interface Post extends PostMeta {
-//   richText: string;
-//   plainText: string;
-//   markdown: string;
-//   html: string;
-//   contentType?: "text" | "markdown" | "html" | "rich-text" | "all";
-// }
 
 export function convertStringToDate(dateString: string): Date {
   return new Date(dateString);
@@ -51,6 +35,7 @@ export const ParsePostMeta = (pageMeta: PageObjectResponse): PostMeta => {
     dateCreated: pageMeta.created_time,
     dateUpdated: pageMeta.last_edited_time,
     URL: pageMeta.url,
+    slug: getSlugFromURL(pageMeta.url),
     status: properties["Status"]["status"].name,
     published: properties["Published"] ? properties["Published"]["checkbox"] : false,
     tags: properties["Tags"]["multi_select"].map((tag: any) => ({
