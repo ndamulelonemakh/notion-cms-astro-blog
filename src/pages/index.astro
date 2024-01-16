@@ -1,50 +1,97 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header title={SITE_TITLE} />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/pages/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header title={SITE_TITLE} />
+	<div id="page-hero" class="hero-section">
+        <!-- <picture class="illustration-caption">
+          <img 
+		
+		 height="30vh" 
+		  src="/smiley-robot-header-01.png"
+		   alt="A fancy illustration from freepik.com" />
+          <caption
+            >Illustration by <a
+              href="https://www.freepik.com/free-vector/online-document-concept-illustration_13338131.htm#from_view=detail_author"
+              >Image by storyset</a
+            > on Freepik</caption
+          >
+        </picture> -->
+	</div>
+
+    <main>
+
+
+      <section id="greet-box" class="greet-box">
+        <h1>📜 Hello, there!</h1>
+        <p>
+          This is a starter template that shows how you can use Astro and Notion to build a blog site. The content of
+          the blog is retried from a Notion database using the official Notion REST API or SDK. Thanks to Astro's
+          Content Collection API all you need to do is to download you content from Notion in Markdown format and put it
+          in the `src/content/blog` folder.You can also optionally opt to automatically update the site using Github
+          Actions and a custom script to download the content from Notion.
+        </p>
+      </section>
+
+      <section id="important-links">
+        <h2>Imporant Links</h2>
+
+        <ul>
+          <li>
+            <a href="https://github.com/endeesa/notion-cms-astro-blog"> Github Repo</a>
+          </li>
+          <li>
+            <a href=""> Live Demo</a>
+          </li>
+
+          <li>
+            <a href="https://developers.notion.com/reference/intro">Notion REST API Reference</a>
+          </li>
+        </ul>
+      </section>
+
+
+      <Footer />
+      <style>
+        .hero-section {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 30vh;
+          padding: 16px;
+          margin-bottom: 8vh;
+		  width: 100vw;
+		  background-image: url("/smiley-robot-header-01.png");
+        }
+
+        .illustration-caption {
+          font-size: 0.8rem;
+          text-align: center;
+          margin-top: 0.5rem;
+          color: gray;
+        }
+
+        .greet-box {
+          padding: 16px;
+          margin-bottom: 8vh;
+          border: 1px solid #eee;
+          border-radius: 4px;
+          background-color: #f5f5f5;
+        }
+
+		#important-links {
+			margin-bottom: 4vh;
+		}
+      </style>
+    </main>
+  </body>
 </html>

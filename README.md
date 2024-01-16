@@ -1,18 +1,12 @@
 # Notion CMS Astro Blog Template - [Demo](https://astro-blog.vercel.app/)
 
-
-* Use this template as a starter to build a blog with Astro and Notion Pages as a CMS.
-
+- Use this template as a starter to build a blog with Astro and Notion Pages as a CMS.
 
 ```sh
-npm create astro@latest -- --template blog
+npm create astro@latest -- --template notion-cms-astro-blog
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/blog)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/blog)
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/blog/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
 ![blog](https://github.com/withastro/astro/assets/2244813/ff10799f-a816-4703-b967-c78997e8323d)
 
@@ -48,16 +42,76 @@ Inside of your Astro project, you'll see the following folders and files:
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+| Command                   | Action                                                     |
+| :------------------------ | :--------------------------------------------------------- |
+| `npm install`             | Installs dependencies                                      |
+| `npm run dev`             | Starts local dev server at `localhost:4321`                |
+| `npm run build`           | Build your production site to `./dist/`                    |
+| `npm run preview`         | Preview your build locally, before deploying               |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check`           |
+| `npm run astro -- --help` | Get help using the Astro CLI                               |
 | `npm run sync`            | Download blog markdown into the Content folder from Notion |
-| `npm run syncDev`         | Same as `npm run sync` but uses the dev config    |
+| `npm run syncDev`         | Same as `npm run sync` but uses the dev config             |
+
+# Content Management
+
+- Since we are using [Content Collections], any markdown files in the `src/content` folder will be automatically converted into pages.
+- In addition, to manually edited markdown files, we can also use the `npm run sync` command to download content from your Notion database into the `src/content` folder.
+- When working in dev, add your [Notion](https://notion.so) API key and database id to the `.env` file as follows:
+
+```sh
+NOTION_CMS_SECRET=<your-notion-api-key>
+NOTION_CMS_DATABASE_ID=<your-notion-database-id>
+```
+
+- Then run `npm run syncDev` to download the content from your Notion database into the `src/content` folder.
+
+- Currently the API is set to return Pages with **Status** set to `Done`, but you can change this in the `src/utils/notion_proxy.ts` file
+
+- You can also modify the content builder engine which tries to convert the [Notion blocks](https://developers.notion.com/reference/block) into markdown format. This is done in the `src/utils/notion_content.ts` file.
+
+# Automatic Content Updates via GitHub Actions
+
+- To automatically update your blog content, you can use GitHub Actions to run the `npm run sync` command on a schedule.
+- Make sure, that the following secrets are set in your GitHub repository:
+
+```sh
+NOTION_CMS_SECRET=<your-notion-api-key>
+NOTION_CMS_DATABASE_ID=<your-notion-database-id>
+```
+
+- Then add the following workflow to your `.github/workflows` folder:
+
+```yaml
+name: Sync Notion Content
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run every day at midnight
+
+jobs:
+    sync:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v2
+        - uses: actions/setup-node@v2
+            with:
+            node-version: '18'
+        - run: npm install
+        - run: npm run sync
+        - run: git config --global user.name 'GitHub Actions'
+        - run: git config --global user.email 'git'
+        - run: git add .
+        - run: git commit -m "Sync Notion Content"
+        - run: git push
+```
+
+
+## License
+
+- [CC-by-4.0](https://creativecommons.org/licenses/by/4.0/) 
+
+
 
 ## Credit
 
