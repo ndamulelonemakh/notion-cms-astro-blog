@@ -1,0 +1,3 @@
+NOTION_CMS_SECRET="your-notion-api-secret"
+NOTION_CMS_DATABASE_ID="your-notion-database-id-from-url"
+NOTION_CMS_WORKSPACE="optional--your-notion-workspace-name"

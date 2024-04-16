@@ -15,18 +15,18 @@
     "template",
     "starter"
   ],
-  "homepage": "https://github.com/endeesa/notion-cms-astro-blog#readme",
+  "homepage": "https://github.com/ndamulelonemakh/notion-cms-astro-blog#readme",
   "bugs": {
-    "url": "https://github.com/endeesa/notion-cms-astro-blog/issues",
+    "url": "https://github.com/ndamulelonemakh/notion-cms-astro-blog/issues",
     "email": "endeesa@yahoo.com"
   },
-  "license": "CC-BY-4.0",
+  "license": "MIT",
   "type": "module",
   "version": "0.0.1",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/endeesa/notion-cms-astro-blog.git"
+    "url": "https://github.com/ndamulelonemakh/notion-cms-astro-blog.git"
   },
   "scripts": {
     "dev": "astro dev",

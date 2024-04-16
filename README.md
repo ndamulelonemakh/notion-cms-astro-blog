@@ -12,7 +12,7 @@ npm create astro@latest -- --template notion-cms-astro-blog
 
 Features:
 
-- ✅ Automatic Sync Script From A [Notion](https://notion.so) Database
+- ✅ Automatically Sync blog content from A [Notion](https://notion.so) Database
 - ✅ Astro [Content Collections](https://docs.astro.build/en/guides/content-collections/)
 - ✅ RSS Feed support
 - ✅ Markdown & MDX support
@@ -55,7 +55,7 @@ All commands are run from the root of the project, from a terminal:
 
 # Content Management
 
-- Since we are using [Content Collections], any markdown files in the `src/content` folder will be automatically converted into pages.
+- Since we are using [AstroJS Content Collections API](https://docs.astro.build/en/guides/content-collections/), any markdown files in the `src/content` folder will be automatically converted into pages.
 - In addition, to manually edited markdown files, we can also use the `npm run sync` command to download content from your Notion database into the `src/content` folder.
 - When working in dev, add your [Notion](https://notion.so) API key and database id to the `.env` file as follows:
 
@@ -109,7 +109,7 @@ jobs:
 
 ## License
 
-- [CC-by-4.0](https://creativecommons.org/licenses/by/4.0/) 
+- This template is licensed under the MIT License - see the full license in the [LICENSE](./LICENSE) file.
 
 
 
