@@ -70,7 +70,7 @@ NOTION_CMS_DATABASE_ID=<your-notion-database-id>
 
 - You can also modify the content builder engine which tries to convert the [Notion blocks](https://developers.notion.com/reference/block) into markdown format. This is done in the `src/utils/notion_content.ts` file.
 
-# Automatic Content Updates via GitHub Actions
+# Automatic Content Updates via GitHub Actions [NOT TESTED YET...]
 
 - To automatically update your blog content, you can use GitHub Actions to run the `npm run sync` command on a schedule.
 - Make sure, that the following secrets are set in your GitHub repository:
