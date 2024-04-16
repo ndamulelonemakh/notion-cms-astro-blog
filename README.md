@@ -1,4 +1,4 @@
-# Notion CMS Astro Blog Template - [Demo](https://astro-blog.vercel.app/)
+# Notion CMS Astro Blog Template - [Demo](https://notion-cms-astro-blog.netlify.app/)
 
 - Use this template as a starter to build a blog with Astro and Notion Pages as a CMS.
 
