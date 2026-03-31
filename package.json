@@ -38,13 +38,13 @@
     "syncDev": "tsx --no-cache --env-file .env src/utils/downloadBlogs.ts"
   },
   "dependencies": {
-    "@astrojs/check": "^0.4.1",
-    "@astrojs/mdx": "^2.0.4",
-    "@astrojs/rss": "^4.0.2",
-    "@astrojs/sitemap": "^3.0.4",
-    "@astrojs/tailwind": "^5.1.0",
+    "@astrojs/check": "^0.9.8",
+    "@astrojs/mdx": "^4.3.14",
+    "@astrojs/rss": "^4.0.18",
+    "@astrojs/sitemap": "^3.7.2",
+    "@astrojs/tailwind": "^6.0.2",
     "@notionhq/client": "^2.2.14",
-    "astro": "^4.1.2",
+    "astro": "^5.9.4",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
   },
