@@ -1,12 +1,12 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
+import { glob } from 'astro/loaders';
 
 const blog = defineCollection({
-	type: 'content',
-	// Type-check frontmatter using a schema
+	loader: glob({ base: './src/content/blog', pattern: '**/*.{md,mdx}' }),
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
-		// Transform string to Date object
 		pubDate: z.string().transform((str) => new Date(str)),
 		updatedDate: z.coerce.date().optional(),
 		heroImage: z.string().optional(),

@@ -24,6 +24,7 @@
   "type": "module",
   "version": "0.0.1",
   "private": true,
+  "packageManager": "pnpm@10.29.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/ndamulelonemakh/notion-cms-astro-blog.git"
@@ -38,15 +39,15 @@
     "syncDev": "tsx --no-cache --env-file .env src/utils/downloadBlogs.ts"
   },
   "dependencies": {
-    "@astrojs/check": "^0.4.1",
-    "@astrojs/mdx": "^2.0.4",
-    "@astrojs/rss": "^4.0.2",
-    "@astrojs/sitemap": "^3.0.4",
-    "@astrojs/tailwind": "^5.1.0",
-    "@notionhq/client": "^2.2.14",
-    "astro": "^4.1.2",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3"
+    "@astrojs/check": "catalog:",
+    "@astrojs/mdx": "catalog:",
+    "@astrojs/rss": "catalog:",
+    "@astrojs/sitemap": "catalog:",
+    "@tailwindcss/vite": "catalog:",
+    "@notionhq/client": "catalog:",
+    "astro": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
   },
   "engines": {
     "node": ">=18.0.0"

@@ -3,7 +3,7 @@
 - Use this template as a starter to build a blog with Astro and Notion Pages as a CMS.
 
 ```sh
-npm create astro@latest -- --template notion-cms-astro-blog
+pnpm create astro@latest -- --template notion-cms-astro-blog
 ```
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/blog/devcontainer.json)
@@ -44,19 +44,19 @@ All commands are run from the root of the project, from a terminal:
 
 | Command                   | Action                                                     |
 | :------------------------ | :--------------------------------------------------------- |
-| `npm install`             | Installs dependencies                                      |
-| `npm run dev`             | Starts local dev server at `localhost:4321`                |
-| `npm run build`           | Build your production site to `./dist/`                    |
-| `npm run preview`         | Preview your build locally, before deploying               |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check`           |
-| `npm run astro -- --help` | Get help using the Astro CLI                               |
-| `npm run sync`            | Download blog markdown into the Content folder from Notion |
-| `npm run syncDev`         | Same as `npm run sync` but uses the dev config             |
+| `pnpm install`           | Installs dependencies                                      |
+| `pnpm dev`               | Starts local dev server at `localhost:4321`                |
+| `pnpm build`             | Build your production site to `./dist/`                    |
+| `pnpm preview`           | Preview your build locally, before deploying               |
+| `pnpm astro ...`         | Run CLI commands like `astro add`, `astro check`           |
+| `pnpm astro -- --help`   | Get help using the Astro CLI                               |
+| `pnpm sync`              | Download blog markdown into the Content folder from Notion |
+| `pnpm syncDev`           | Same as `pnpm sync` but uses the dev config                |
 
 # Content Management
 
 - Since we are using [AstroJS Content Collections API](https://docs.astro.build/en/guides/content-collections/), any markdown files in the `src/content` folder will be automatically converted into pages.
-- In addition, to manually edited markdown files, we can also use the `npm run sync` command to download content from your Notion database into the `src/content` folder.
+- In addition, to manually edited markdown files, we can also use the `pnpm sync` command to download content from your Notion database into the `src/content` folder.
 - When working in dev, add your [Notion](https://notion.so) API key and database id to the `.env` file as follows:
 
 ```sh
@@ -64,7 +64,7 @@ NOTION_CMS_SECRET=<your-notion-api-key>
 NOTION_CMS_DATABASE_ID=<your-notion-database-id>
 ```
 
-- Then run `npm run syncDev` to download the content from your Notion database into the `src/content` folder.
+- Then run `pnpm syncDev` to download the content from your Notion database into the `src/content` folder.
 
 - Currently the API is set to return Pages with **Status** set to `Done`, but you can change this in the `src/utils/notion_proxy.ts` file
 
@@ -72,7 +72,7 @@ NOTION_CMS_DATABASE_ID=<your-notion-database-id>
 
 # Automatic Content Updates via GitHub Actions [NOT TESTED YET...]
 
-- To automatically update your blog content, you can use GitHub Actions to run the `npm run sync` command on a schedule.
+- To automatically update your blog content, you can use GitHub Actions to run the `pnpm sync` command on a schedule.
 - Make sure, that the following secrets are set in your GitHub repository:
 
 ```sh
@@ -97,8 +97,8 @@ jobs:
         - uses: actions/setup-node@v2
             with:
             node-version: '18'
-        - run: npm install
-        - run: npm run sync
+        - run: pnpm install
+        - run: pnpm sync
         - run: git config --global user.name 'GitHub Actions'
         - run: git config --global user.email 'git'
         - run: git add .
