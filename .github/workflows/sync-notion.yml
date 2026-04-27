@@ -1,0 +1,59 @@
+name: Sync Notion Content
+
+on:
+  # Scheduled trigger is intentionally disabled for now. Uncomment to enable.
+  # schedule:
+  #   - cron: '0 0 * * *' # daily at 00:00 UTC
+  workflow_dispatch: {} # allows manual runs from the Actions tab
+
+permissions:
+  contents: write # required to push the synced content back to the repo
+
+concurrency:
+  group: sync-notion
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NOTION_CMS_SECRET: ${{ secrets.NOTION_CMS_SECRET }}
+      NOTION_CMS_DATABASE_ID: ${{ secrets.NOTION_CMS_DATABASE_ID }}
+      NOTION_CMS_WORKSPACE: ${{ secrets.NOTION_CMS_WORKSPACE }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Verify required secrets are present
+        run: |
+          : "${NOTION_CMS_SECRET:?NOTION_CMS_SECRET secret is not set}"
+          : "${NOTION_CMS_DATABASE_ID:?NOTION_CMS_DATABASE_ID secret is not set}"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Sync Notion content
+        run: pnpm sync
+
+      - name: Commit & push changes (if any)
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if [[ -z "$(git status --porcelain)" ]]; then
+            echo "No content changes to commit."
+            exit 0
+          fi
+          git add .
+          git commit -m "chore(content): sync Notion content [skip ci]"
+          git push
