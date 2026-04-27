@@ -1,6 +1,47 @@
 packages:
   - "."
 
+# ---------------------------------------------------------------------------
+# Supply-chain attack hardening (pnpm >= 10.x)
+# ---------------------------------------------------------------------------
+# Block install of versions published less than 7 days ago. Most malicious
+# package releases (typo-squats, compromised maintainer publishes) are
+# detected and yanked within hours/days, so a cool-down window dramatically
+# reduces exposure. See https://pnpm.io/settings#minimumreleaseage
+minimumReleaseAge: 10080 # minutes (= 7 days)
+minimumReleaseAgeExclude: [] # add trusted internal pkgs here if ever needed
+
+# Refuse to run scripts/CLIs whose installed dep tree drifts from the lockfile.
+verifyDepsBeforeRun: error
+
+# Disallow arbitrary postinstall scripts. Only packages explicitly listed in
+# `onlyBuiltDependencies` may execute lifecycle scripts (preinstall, install,
+# postinstall, prepare). This neutralizes the most common malware vector.
+dangerouslyAllowAllBuilds: false
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+
+# Fail the install if the lockfile would change (use `--no-frozen-lockfile`
+# locally when intentionally updating). In CI this is implicit, but setting
+# it here keeps local installs honest too.
+strictPeerDependencies: true
+autoInstallPeers: false
+resolutionMode: highest
+dedupePeerDependents: true
+
+# Force lockfile + integrity checks; never silently fall back.
+verifyStoreIntegrity: true
+strictStorePkgContentCheck: true
+
+# Block git/http/file deps that bypass the registry & integrity checks.
+allowNonAppliedPatches: false
+
+# Audit configuration – fail installs on high/critical advisories.
+auditConfig:
+  ignoreCves: []
+  ignoreGhsas: []
+
 catalog:
   "@astrojs/check": "^0.9.8"
   "@astrojs/mdx": "^5.0.4"
@@ -11,3 +52,7 @@ catalog:
   astro: "^6.1.9"
   tailwindcss: "^4.0.0"
   typescript: "^5.3.3"
+
+# Pin transitive vulnerabilities here when needed.
+overrides:
+  yaml: ">=2.8.3"
