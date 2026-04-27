@@ -12,71 +12,188 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
   </head>
   <body>
     <Header title={SITE_TITLE} />
-    <div id="page-hero" class="hero-section"></div>
+
+    <div class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <p class="hero-kicker">Notion &middot; Astro &middot; MDX</p>
+        <h1 class="hero-title">Content, without the complexity.</h1>
+        <p class="hero-sub">Write in Notion &mdash; publish with Astro.</p>
+      </div>
+    </div>
 
     <main>
-      <section id="greet-box" class="greet-box">
-        <h1>📜 Hello, there!</h1>
+      <section class="intro">
         <p>
-          This template demonstrates how to use <a href="https://astro.build/">Astro</a> and <a
-            href="https://www.notion.so/">Notion</a
-          > as a <a href="">CMS</a>. The blog content is fetched from a Notion database using the official <a
-            href="https://www.npmjs.com/package/@notionhq/client">Notion SDK for JavaScript</a
-          >. THANKS to <a href="https://docs.astro.build/en/guides/content-collections/"
-            >Astro's Content Collection API</a
-          >, you simply need to download your Notion content in Markdown format and place it in the <code
-            >src/content/blog</code
-          > folder. Optionally, you can intergrate with <a href="https://github.com/features/actions">Github Actions</a> to
-          run the synchronization script(<code>npm run sync</code>) on a schedule.
+          This template shows how <a href="https://astro.build/">Astro</a> and
+          <a href="https://www.notion.so/">Notion</a> can serve as a lightweight CMS. Posts are pulled from a Notion database
+          via the official
+          <a href="https://www.npmjs.com/package/@notionhq/client">Notion SDK</a>, converted to Markdown, and dropped
+          into <code>src/content/blog</code>. A <a href="https://github.com/features/actions">GitHub Actions</a> workflow
+          can run <code>pnpm sync</code> on a schedule to keep things fresh automatically.
         </p>
       </section>
 
-      <section id="important-links">
-        <h2>Imporant Links</h2>
-
-        <ul>
-          <li>
-            <a href="https://github.com/endeesa/notion-cms-astro-blog"> Github Repo</a>
-          </li>
-
-          <li>
-            <a href="https://developers.notion.com/reference/intro">Notion REST API Reference</a>
-          </li>
-        </ul>
+      <section class="links-section">
+        <h2 class="links-heading">Quick links</h2>
+        <div class="link-grid">
+          <a
+            class="link-card"
+            href="https://github.com/ndamulelonemakh/notion-cms-astro-blog"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="link-card-title">GitHub Repo</span>
+            <span class="link-card-desc">Source code, issues &amp; contributions</span>
+          </a>
+          <a
+            class="link-card"
+            href="https://developers.notion.com/reference/intro"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="link-card-title">Notion API Docs</span>
+            <span class="link-card-desc">Official REST API reference</span>
+          </a>
+          <a
+            class="link-card"
+            href="https://docs.astro.build/en/guides/content-collections/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="link-card-title">Content Collections</span>
+            <span class="link-card-desc">Astro's typed content layer</span>
+          </a>
+        </div>
       </section>
 
       <Footer />
+
       <style>
-        .hero-section {
+        /* ── Hero ───────────────────────────────────────────────── */
+        .hero {
+          position: relative;
+          height: 40vh;
+          min-height: 280px;
+          background-image: url("/smiley-robot-header-01.png");
+          background-size: cover;
+          background-position: center top;
+          overflow: hidden;
+        }
+        .hero-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            150deg,
+            rgba(8, 8, 28, 0.78) 0%,
+            rgba(22, 12, 68, 0.62) 55%,
+            rgba(0, 0, 0, 0.3) 100%
+          );
+        }
+        .hero-content {
+          position: relative;
+          z-index: 1;
+          height: 100%;
           display: flex;
+          flex-direction: column;
           align-items: center;
           justify-content: center;
-          height: 30vh;
-          padding: 16px;
-          margin-bottom: 1rem;
-          width: 100vw;
-          background-image: url("/smiley-robot-header-01.png");
-          background-position: left top;
-          background-size: cover;
-        }
-
-        .illustration-caption {
-          font-size: 0.8rem;
           text-align: center;
-          margin-top: 0.5rem;
-          color: gray;
+          padding: 0 1.5rem;
+          gap: 0.55rem;
+        }
+        .hero-kicker {
+          margin: 0;
+          font-size: 0.72rem;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.55);
+        }
+        .hero-title {
+          margin: 0;
+          font-size: clamp(1.5rem, 4vw, 2.5rem);
+          font-weight: 700;
+          color: #fff;
+          line-height: 1.15;
+          letter-spacing: -0.025em;
+        }
+        .hero-sub {
+          margin: 0;
+          font-size: 0.95rem;
+          color: rgba(255, 255, 255, 0.65);
         }
 
-        .greet-box {
-          padding: 16px;
-          margin-bottom: 2rem;
-          border: 1px solid #eee;
+        /* ── Intro ──────────────────────────────────────────────── */
+        .intro {
+          border-left: 3px solid var(--accent);
+          padding: 0.25rem 0 0.25rem 1.4rem;
+          margin-bottom: 3rem;
+        }
+        .intro p {
+          margin: 0;
+          font-size: 0.95rem;
+          line-height: 1.8;
+          color: rgb(var(--gray-dark));
+        }
+        .intro a {
+          color: var(--accent);
+          text-decoration: none;
+          border-bottom: 1px solid transparent;
+          transition: border-color 0.15s ease;
+        }
+        .intro a:hover {
+          border-bottom-color: var(--accent);
+        }
+        .intro code {
+          background: rgb(var(--gray-light));
+          padding: 0.1em 0.4em;
           border-radius: 4px;
-          background-color: #f5f5f5;
+          font-size: 0.86em;
         }
 
-        #important-links {
-          margin-bottom: 4vh;
+        /* ── Link grid ──────────────────────────────────────────── */
+        .links-heading {
+          font-size: 0.68rem;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: rgb(var(--gray));
+          font-weight: 600;
+          margin-bottom: 1rem;
+        }
+        .link-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+          gap: 0.9rem;
+          margin-bottom: 4rem;
+        }
+        .link-card {
+          display: flex;
+          flex-direction: column;
+          gap: 0.3rem;
+          padding: 1.1rem 1.25rem;
+          border: 1px solid rgb(var(--gray-light));
+          border-radius: 10px;
+          background: #fff;
+          text-decoration: none;
+          transition:
+            box-shadow 0.2s ease,
+            border-color 0.2s ease,
+            transform 0.2s ease;
+        }
+        .link-card:hover {
+          box-shadow: var(--box-shadow);
+          border-color: var(--accent);
+          transform: translateY(-3px);
+        }
+        .link-card-title {
+          font-size: 0.92rem;
+          font-weight: 700;
+          color: rgb(var(--black));
+        }
+        .link-card-desc {
+          font-size: 0.78rem;
+          color: rgb(var(--gray));
+          line-height: 1.45;
         }
       </style>
     </main>

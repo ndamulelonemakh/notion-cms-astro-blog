@@ -6,7 +6,7 @@ import type {
   ListBlockChildrenResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 import { convertBlocksToTextContent } from "./notion_content";
-import { UNSPLASH_RANDOM_IMAGE_URL } from "./../consts";
+import { placeholderImage } from "./../consts";
 
 const NOTION_API_KEY: any = import.meta.env?.NOTION_CMS_SECRET || process.env.NOTION_CMS_SECRET;
 const NOTION_DATABASE_ID: any = import.meta.env?.NOTION_CMS_DATABASE_ID || process.env.NOTION_CMS_DATABASE_ID;
@@ -51,7 +51,8 @@ export const ParsePostMeta = (pageMeta: PageObjectResponse): PostMeta => {
       color: tag.color,
     })),
     authors: [pageMeta.created_by.id],
-    imageURL: hasImage ? img : UNSPLASH_RANDOM_IMAGE_URL,
+    // Seed by page id so each post gets a stable placeholder.
+    imageURL: hasImage ? img : placeholderImage(720, 360, id),
   };
 };
 
