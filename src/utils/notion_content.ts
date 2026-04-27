@@ -15,10 +15,6 @@ import type {
   DividerBlockObjectResponse,
   ImageBlockObjectResponse,
   VideoBlockObjectResponse,
-  PdfBlockObjectResponse,
-  FileBlockObjectResponse,
-  AudioBlockObjectResponse,
-  LinkPreviewBlockObjectResponse,
   ListBlockChildrenResponse,
   BlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
