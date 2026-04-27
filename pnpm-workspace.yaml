@@ -9,7 +9,26 @@ packages:
 # detected and yanked within hours/days, so a cool-down window dramatically
 # reduces exposure. See https://pnpm.io/settings#minimumreleaseage
 minimumReleaseAge: 10080 # minutes (= 7 days)
-minimumReleaseAgeExclude: [] # add trusted internal pkgs here if ever needed
+# Trusted first-party packages allowed to bypass the cool-down window.
+# Tailwind ships its native `oxide` engine across many platform-specific
+# subpackages; new releases routinely arrive together and would otherwise
+# block installs for a full week.
+minimumReleaseAgeExclude:
+  - "@tailwindcss/oxide"
+  - "@tailwindcss/oxide-android-arm64"
+  - "@tailwindcss/oxide-darwin-arm64"
+  - "@tailwindcss/oxide-darwin-x64"
+  - "@tailwindcss/oxide-freebsd-x64"
+  - "@tailwindcss/oxide-linux-arm-gnueabihf"
+  - "@tailwindcss/oxide-linux-arm64-gnu"
+  - "@tailwindcss/oxide-linux-arm64-musl"
+  - "@tailwindcss/oxide-linux-x64-gnu"
+  - "@tailwindcss/oxide-linux-x64-musl"
+  - "@tailwindcss/oxide-wasm32-wasi"
+  - "@tailwindcss/oxide-win32-arm64-msvc"
+  - "@tailwindcss/oxide-win32-x64-msvc"
+  - "@tailwindcss/vite"
+  - "tailwindcss"
 
 # Refuse to run scripts/CLIs whose installed dep tree drifts from the lockfile.
 verifyDepsBeforeRun: error
@@ -35,7 +54,7 @@ verifyStoreIntegrity: true
 strictStorePkgContentCheck: true
 
 # Block git/http/file deps that bypass the registry & integrity checks.
-allowNonAppliedPatches: false
+allowUnusedPatches: false
 
 # Audit configuration – fail installs on high/critical advisories.
 auditConfig:

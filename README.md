@@ -1,6 +1,7 @@
-# Notion CMS Astro Blog Template - [Demo](https://notion-cms-astro-blog.netlify.app/)
+# Notion CMS Astro Blog Template 
 
 - Use this template as a starter to build a blog with Astro and Notion Pages as a CMS.
+- Checkout the [Live Demo](https://notion-cms-astro-blog.netlify.app/)
 
 ```sh
 pnpm create astro@latest -- --template notion-cms-astro-blog
@@ -8,7 +9,7 @@ pnpm create astro@latest -- --template notion-cms-astro-blog
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/blog/devcontainer.json)
 
-![blog](https://github.com/withastro/astro/assets/2244813/ff10799f-a816-4703-b967-c78997e8323d)
+![Landing page screenshot](./landing.png)
 
 Features:
 
