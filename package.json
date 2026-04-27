@@ -43,7 +43,7 @@
     "@astrojs/mdx": "catalog:",
     "@astrojs/rss": "catalog:",
     "@astrojs/sitemap": "catalog:",
-    "@astrojs/tailwind": "catalog:",
+    "@tailwindcss/vite": "catalog:",
     "@notionhq/client": "catalog:",
     "astro": "catalog:",
     "tailwindcss": "catalog:",
@@ -57,7 +57,10 @@
     "linux"
   ],
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "sharp"],
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ],
     "overrides": {
       "yaml": ">=2.8.3"
     }
