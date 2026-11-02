@@ -70,7 +70,7 @@ catalog:
   "@notionhq/client": "^2.2.14"
   astro: "^7.2.8"
   tailwindcss: "^4.0.0"
-  typescript: "^5.3.3"
+  typescript: "^6.0.3"
 
 # Pin transitive vulnerabilities here when needed.
 overrides:
