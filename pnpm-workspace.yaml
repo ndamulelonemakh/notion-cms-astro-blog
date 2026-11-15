@@ -63,15 +63,20 @@ auditConfig:
 
 catalog:
   "@astrojs/check": "^0.9.8"
-  "@astrojs/mdx": "^8.1.2"
+  "@astrojs/mdx": "^8.1.3"
   "@astrojs/rss": "^4.0.18"
   "@astrojs/sitemap": "^3.7.2"
-  "@tailwindcss/vite": "^4.0.0"
+  "@tailwindcss/vite": "^4.3.5"
   "@notionhq/client": "^2.2.14"
-  astro: "^7.4.4"
-  tailwindcss: "^4.0.0"
+  astro: "^7.4.7"
+  tailwindcss: "^4.3.5"
   typescript: "^5.3.3"
 
 # Pin transitive vulnerabilities here when needed.
 overrides:
   yaml: ">=2.8.3"
+  # Keep the emnapi core/runtime pair on one major line. Rolldown 1.3 pulls in
+  # the 2.0 beta runtime, which the Astro language server then picks up as a
+  # peer next to the 1.x core and crashes `astro check` on exit.
+  "@emnapi/core": "^1.11.3"
+  "@emnapi/runtime": "^1.11.3"
