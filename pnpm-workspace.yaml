@@ -65,10 +65,10 @@ catalog:
   "@astrojs/check": "^0.9.8"
   "@astrojs/mdx": "^8.1.6"
   "@astrojs/rss": "^4.0.18"
-  "@astrojs/sitemap": "^3.7.5"
+  "@astrojs/sitemap": "^3.7.6"
   "@tailwindcss/vite": "^4.3.5"
   "@notionhq/client": "^2.2.14"
-  astro: "^7.4.12"
+  astro: "^7.4.13"
   tailwindcss: "^4.3.5"
   typescript: "^5.3.3"
 
